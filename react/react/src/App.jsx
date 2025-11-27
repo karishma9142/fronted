@@ -3,6 +3,7 @@ import { useState , useEffect} from "react"
 // condition rendering
 function App() {
   const [CounterVisible,setCounterVisible]=useState(true);
+  const [count,setCount] = useState(0);
   return <div>
    <h3>hii there</h3>
     {CounterVisible?<Counter></Counter>:null}
