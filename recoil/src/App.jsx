@@ -1,7 +1,8 @@
 import { Children, createContext, useContext, useState } from 'react'
-import {RecoilRoot,atom, useRecoilValue, useSetRecoilState} from 'recoil'
+import { RecoilRoot, atom, useRecoilValue, useSetRecoilState } from 'recoil'
 import './App.css'
 import { CounterAtom } from './store/atoms/counter'
+import { evenSelector } from './store/selector/selector'
 
 
 // using context api => count , inc buttom and dec buttom renders but only count is changed so 
@@ -51,40 +52,82 @@ import { CounterAtom } from './store/atoms/counter'
 //   </div>
 // }
 
+
+
+
 // now doing the same thing using recoil
 
-function App(){
-  return (
+// function App(){
+//   return (
+//     <RecoilRoot>
+//       <Counter/>
+//     </RecoilRoot>
+//   )
+// }
+// function Counter(){
+//   return(
+//     <>
+//     <CurrentCount/>
+//     <IncCnt/>
+//     <DecCnt/>
+//     </>
+//   )
+// }
+// function CurrentCount(){
+//   const count = useRecoilValue(CounterAtom);
+//   return <div>
+//     {count}
+//   </div>
+// }
+// function IncCnt(){
+//   const setCount = useSetRecoilState(CounterAtom);
+//   return <div>
+//     <button onClick={() => setCount(c => c+1)}>Inc cnt</button>
+//   </div>
+// }
+// function DecCnt(){
+//   const setCount = useSetRecoilState(CounterAtom);
+//   return <div>
+//     <button onClick={() => setCount(c => c-1)}>Dec cnt</button>
+//   </div>
+// }
+
+
+
+
+
+// learn selector
+
+function App() {
+  return <div>
     <RecoilRoot>
-      <Counter/>
+      <Buttons />
+      <Counter />
+      <IsEven />
     </RecoilRoot>
-  )
+  </div>
 }
-function Counter(){
-  return(
-    <>
-    <CurrentCount/>
-    <IncCnt/>
-    <DecCnt/>
-    </>
-  )
+
+function Buttons() {
+  const setCount = useSetRecoilState(CounterAtom);
+  return <div>
+    <button onClick={() => setCount(c => c + 1)}>inc</button>
+    <button onClick={() => setCount(c => c - 1)}>dec</button>
+  </div>
 }
-function CurrentCount(){
-  const count = useRecoilValue(CounterAtom);
+
+function Counter() {
+  const count = useRecoilValue(CounterAtom); // subscribe to atom 
   return <div>
     {count}
   </div>
 }
-function IncCnt(){
-  const setCount = useSetRecoilState(CounterAtom);
+
+function IsEven() {
+  const even = useRecoilValue(evenSelector); // subscribe to evenselector selctor
   return <div>
-    <button onClick={() => setCount(c => c+1)}>Inc cnt</button>
+    {even ? "Even" : "Odd"}
   </div>
 }
-function DecCnt(){
-  const setCount = useSetRecoilState(CounterAtom);
-  return <div>
-    <button onClick={() => setCount(c => c-1)}>Dec cnt</button>
-  </div>
-}
+
 export default App
