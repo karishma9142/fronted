@@ -6,14 +6,32 @@ import { LeftSideBar } from './componenet/leftSideBar'
 import { Toggle } from './componenet/toggle'
 
 
+
 export default function App() {
-  return <div className="h-screen bg-white dark:bg-blue-50">
-    <h1 className="text-black dark:text-white">Hello world</h1>
-    <button onClick={() => {
-      document.querySelector("html").classList.toggle("dark")
-    }}>toggle</button>
-  </div>
+  const [dark, setDark] = useState(false);
+
+  useEffect(() => {
+    if (dark) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [dark]);
+
+  return (
+    <div className="h-screen bg-white dark:bg-blue-50">
+      <h1 className="text-black dark:text-white">Hello world</h1>
+
+      <button
+        onClick={() => setDark(!dark)}
+        className="mt-4 px-4 py-2 bg-gray-200 dark:bg-gray-800 dark:text-white"
+      >
+        toggle
+      </button>
+    </div>
+  );
 }
+
 
 // export default function App() {
 //   return (
