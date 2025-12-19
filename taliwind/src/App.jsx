@@ -1,35 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React, { useEffect, useState } from 'react'
 import './App.css'
 import { LeftSideBar } from './componenet/leftSideBar'
-import { Toggle } from './componenet/toggle'
-
+import { MainComponent } from './componenet/mainComponent'
+import useMediaQuery from './componenet/useMediaQuery'
 
 
 export default function App() {
-  const [dark, setDark] = useState(false);
-
+  const [sidebarOpen, setSidebarOpen] =  useState(true);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+  
   useEffect(() => {
-    if (dark) {
-      document.documentElement.classList.add("dark");
+    if (isDesktop == false) {
+      setSidebarOpen(false)
     } else {
-      document.documentElement.classList.remove("dark");
+      setSidebarOpen(true)
     }
-  }, [dark]);
+  }, [isDesktop]);
 
-  return (
-    <div className="h-screen bg-white dark:bg-blue-50">
-      <h1 className="text-black dark:text-white">Hello world</h1>
-
-      <button
-        onClick={() => setDark(!dark)}
-        className="mt-4 px-4 py-2 bg-gray-200 dark:bg-gray-800 dark:text-white"
-      >
-        toggle
-      </button>
-    </div>
-  );
+  return <div className='bg-[url(./assets/dark-bg.jpg)] h-screen w-full bg-no-repeat bg-cover flex'>
+    <LeftSideBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
+    <MainComponent sidebarOpen={sidebarOpen}/>
+  </div>
 }
 
 
